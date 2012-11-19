@@ -2,6 +2,7 @@
 from django.contrib.auth import REDIRECT_FIELD_NAME
 from django.http import HttpResponse
 from django.shortcuts import redirect
+from django.utils.decorators import method_decorator
 from django.utils.http import urlquote
 
 from mezzanine.conf import settings
@@ -50,7 +51,8 @@ class PageMiddleware(object):
             bits = (settings.LOGIN_URL, REDIRECT_FIELD_NAME, path)
             return redirect("%s?%s=%s" % bits)
 
-        if page.slug == slug and view_func == page_view:
+#        if page.slug == slug and (view_func == page_view or len(pages)):
+        if page:
             # Add the page to the ``extra_context`` arg for the
             # page view, which is responsible for choosing which
             # template to use, and raising 404 if there's no page

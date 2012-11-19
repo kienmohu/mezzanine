@@ -29,8 +29,8 @@ class BlogPost(Displayable, Ownable, RichText, AdminThumbMixin):
     admin_thumb_field = "featured_image"
 
     class Meta:
-        verbose_name = _("Blog post")
-        verbose_name_plural = _("Blog posts")
+        verbose_name = _("General post")
+        verbose_name_plural = _("General posts")
         ordering = ("-publish_date",)
 
     @models.permalink

@@ -12,8 +12,8 @@ mostly get applied globally to different parts of the admin.
 
 {% endcomment %}
 
-{% block title %}{{ title }} | Mezzanine{% endblock %}
-{% block branding %}<h1 id="site-name">Mezzanine</h1>{% endblock %}
+{% block title %}{{ title }} | {{ settings.SITE_TITLE }}{% endblock %}
+{% block branding %}<h1 id="site-name">{{ settings.SITE_TITLE }}</h1>{% endblock %}
 {% block nav-global %}{% endblock %}
 
 {% block extrahead %}

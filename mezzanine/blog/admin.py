@@ -57,5 +57,5 @@ class BlogCategoryAdmin(admin.ModelAdmin):
         return False
 
 
-admin.site.register(BlogPost, BlogPostAdmin)
+#admin.site.register(BlogPost, BlogPostAdmin)
 admin.site.register(BlogCategory, BlogCategoryAdmin)

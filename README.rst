@@ -1,7 +1,10 @@
 .. image:: https://secure.travis-ci.org/stephenmcd/mezzanine.png?branch=master
    :target: http://travis-ci.org/#!/stephenmcd/mezzanine
 
+Forked for procor.
+
 Created by `Stephen McDonald <http://twitter.com/stephen_mcd>`_
+
 
 ========
 Overview
