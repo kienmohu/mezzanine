@@ -92,7 +92,10 @@ def page_menu(context, token):
     # pages for the current parent. Here we also assign the attributes
     # to the page object that determines whether it belongs in the
     # current menu template being rendered.
-    context["page_branch"] = context["menu_pages"].get(parent_page_id, [])
+    page_branch = [ page for page in context["menu_pages"].get(parent_page_id, []) \
+                if page.in_menu_template(template_name)]
+
+    context["page_branch"] = page_branch
     context["page_branch_in_menu"] = False
     for page in context["page_branch"]:
         page.in_menu = page.in_menu_template(template_name)
@@ -112,7 +115,7 @@ def page_menu(context, token):
         # simulating these are maintained here for backwards
         # compatibility in templates, but will be removed eventually.
         page.in_navigation = page.in_menu
-        page.in_footer = not (not page.in_menu and "footer" in template_name)
+        page.in_footer = not  (not page.in_menu and "footer" in template_name)
         if page.in_navigation:
             context["page_branch_in_navigation"] = True
         if page.in_footer:
