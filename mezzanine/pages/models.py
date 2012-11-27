@@ -1,4 +1,4 @@
-from django.core.urlresolvers import resolve, reverse
+from django.core.urlresolvers import resolve, reverse, NoReverseMatch
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
@@ -60,7 +60,15 @@ class Page(BasePage):
         if slug == "/":
             return reverse("home")
         else:
-            return reverse("page", kwargs={"slug": slug})
+#            try:
+#                print 'slug is: %s, %s' % (slug, reverse("page", kwargs={"slug": slug}))
+#            except Exception, e:
+#                print 'Error: %s' % e
+            try:
+                return reverse("page", kwargs={"slug": slug})
+            except NoReverseMatch, e:
+                return reverse(slug)
+
 
     def save(self, *args, **kwargs):
         """
