@@ -76,7 +76,16 @@ class Page(BasePage):
         and set the initial value for ordering.
         """
         if self.id is None:
-            self.content_model = self._meta.object_name.lower()
+            object_class = self.__class__
+            content_model_names = []
+            while object_class._meta.object_name.lower() != 'page':
+                name  = object_class._meta.object_name.lower()
+                content_model_names.append(name)
+                # Will fail if there are mixins after the Page class
+                object_class = object_class.__bases__[0]
+            content_model_names.reverse()
+            self.content_model = '.'.join(content_model_names)
+
         titles = [self.title]
         parent = self.parent
         while parent is not None:
@@ -130,7 +139,11 @@ class Page(BasePage):
         Provies a generic method of retrieving the instance of the custom
         content type's model for this page.
         """
-        return getattr(self, self.content_model, None)
+        content_model_names = self.content_model.split('.')
+        content_model = self
+        for content_model_name in content_model_names:
+            content_model = getattr(content_model, content_model_name, None)
+        return content_model
 
     def get_slug(self):
         """
