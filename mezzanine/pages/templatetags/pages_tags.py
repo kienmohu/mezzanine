@@ -142,7 +142,6 @@ def models_for_pages(*args):
             setattr(model, "name", model._meta.verbose_name)
             setattr(model, "add_url", admin_url(model, "add"))
             page_models.append(model)
-    print page_models
     return page_models
 
 
