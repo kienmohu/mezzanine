@@ -25,7 +25,7 @@ class DisplayableAdmin(admin.ModelAdmin):
     radio_fields = {"status": admin.HORIZONTAL}
     fieldsets = (
         (None, {
-            "fields": ["title", "status", ("publish_date", "expiry_date")],
+            "fields": ["title", "short_title", "status", ("publish_date", "expiry_date")],
         }),
         (_("Meta data"), {
             "fields": ["_meta_title", "slug",

@@ -132,6 +132,7 @@ def models_for_pages(*args):
     ``Page`` model.
     """
     page_models = []
+    print Page.get_content_models()
     for model in Page.get_content_models():
         try:
             admin_url(model, "add")
@@ -141,6 +142,7 @@ def models_for_pages(*args):
             setattr(model, "name", model._meta.verbose_name)
             setattr(model, "add_url", admin_url(model, "add"))
             page_models.append(model)
+    print page_models
     return page_models
 
 
