@@ -70,6 +70,11 @@ class PageMiddleware(object):
         # Add the page to its template context, and set helper
         # attributes like ``is_current``.
         response.context_data["page"] = page
+        if page.content_model:
+            try:
+                response.context_data["actual_page"] = page.get_content_model()
+            except Exception, e:
+                print type(e), e
         try:
             response.context_data["editable_obj"]
         except KeyError:
