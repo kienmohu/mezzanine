@@ -32,6 +32,7 @@ class BlogPost(Displayable, Ownable, RichText, AdminThumbMixin):
         verbose_name = _("General post")
         verbose_name_plural = _("General posts")
         ordering = ("-publish_date",)
+        get_latest_by = "publish_date"
 
     @models.permalink
     def get_absolute_url(self):
