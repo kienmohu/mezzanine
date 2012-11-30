@@ -6,6 +6,8 @@ from mezzanine.core.fields import FileField
 from mezzanine.core.models import Displayable, Ownable, RichText, Slugged
 from mezzanine.generic.fields import CommentsField, RatingField
 from mezzanine.utils.models import AdminThumbMixin
+from pyquery import PyQuery as pq
+import os
 
 
 class BlogPost(Displayable, Ownable, RichText, AdminThumbMixin):
@@ -22,7 +24,10 @@ class BlogPost(Displayable, Ownable, RichText, AdminThumbMixin):
     rating = RatingField(verbose_name=_("Rating"))
     featured_image = FileField(verbose_name=_("Featured Image"),
                                upload_to="blog", format="Image",
-                               max_length=255, null=True, blank=True)
+                               max_length=255, null=True, blank=True,
+                               help_text='Choose a feature image or one will' +
+                            ' be chosen from the first local ' +
+                            'img in the content field')
     related_posts = models.ManyToManyField("self",
                                  verbose_name=_("Related posts"), blank=True)
 
@@ -33,6 +38,22 @@ class BlogPost(Displayable, Ownable, RichText, AdminThumbMixin):
         verbose_name_plural = _("General posts")
         ordering = ("-publish_date",)
         get_latest_by = "publish_date"
+
+    def save(self, *args, **kwargs):
+        if not self.featured_image:
+            # Try to use image from content field
+            pq_content = pq(self.content)
+            pq_imgs = pq_content.find('img')
+            if pq_imgs.size():
+                for index in range(0, pq_imgs.size()):
+                    img = pq_imgs.eq(index)
+                    src = img.attr('src')
+                    if src.startswith(settings.MEDIA_URL):
+                        name = src[len(settings.MEDIA_URL):]
+                        if os.path.exists(settings.MEDIA_ROOT + os.path.sep + name):
+                            self.featured_image = name
+                            break
+        return super(BlogPost, self).save(*args, **kwargs)
 
     @models.permalink
     def get_absolute_url(self):
@@ -75,6 +96,18 @@ class BlogCategory(Slugged):
     """
     A category for grouping blog posts into a series.
     """
+
+    # This is made just for the project section of procor
+
+    PROCOR_PROJECT_SECTION_TUPLE = [
+        ('Knowledge', 'knowledge'),
+        ('Action', 'action'),
+        ('Global Community', 'global community'),
+    ]
+
+    project_section = models.CharField(max_length=50, null=True, blank=True,
+            choices=PROCOR_PROJECT_SECTION_TUPLE,
+            help_text='This will relate this category to a project section.')
 
     class Meta:
         verbose_name = _("Blog Category")

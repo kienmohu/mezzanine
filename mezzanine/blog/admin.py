@@ -45,7 +45,7 @@ class BlogCategoryAdmin(admin.ModelAdmin):
     unless explicitly specified.
     """
 
-    fieldsets = ((None, {"fields": ("title",)}),)
+    fieldsets = ((None, {"fields": ("title", "project_section")}),)
 
     def in_menu(self):
         """
