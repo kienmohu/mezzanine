@@ -114,8 +114,8 @@ class BlogCategory(Slugged):
             help_text='This will relate this category to a project section.')
 
     class Meta:
-        verbose_name = _("Blog Category")
-        verbose_name_plural = _("Blog Categories")
+        verbose_name = _("Post Category")
+        verbose_name_plural = _("Post Categories")
 
     @models.permalink
     def get_absolute_url(self):
