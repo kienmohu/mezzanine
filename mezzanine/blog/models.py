@@ -99,10 +99,14 @@ class BlogCategory(Slugged):
 
     # This is made just for the project section of procor
 
+    SECTION_KNOWLEDGE_TUPLE = ('knowledge', 'Knowledge')
+    SECTION_ACTION_TUPLE = ('action', 'Action')
+    SECTION_GLOBAL_TUPLE = ('global community', 'Global Community')
+
     PROCOR_PROJECT_SECTION_TUPLE = [
-        ('Knowledge', 'knowledge'),
-        ('Action', 'action'),
-        ('Global Community', 'global community'),
+        SECTION_KNOWLEDGE_TUPLE,
+        SECTION_ACTION_TUPLE,
+        SECTION_GLOBAL_TUPLE,
     ]
 
     project_section = models.CharField(max_length=50, null=True, blank=True,

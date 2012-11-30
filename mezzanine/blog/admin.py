@@ -46,6 +46,7 @@ class BlogCategoryAdmin(admin.ModelAdmin):
     """
 
     fieldsets = ((None, {"fields": ("title", "project_section")}),)
+    list_display = ['title', 'project_section']
 
     def in_menu(self):
         """
