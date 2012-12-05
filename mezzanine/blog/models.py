@@ -33,6 +33,8 @@ class BlogPost(Displayable, Ownable, RichText, AdminThumbMixin):
 
     admin_thumb_field = "featured_image"
 
+    country = models.ForeignKey("Country", null=True, blank=True)
+
     class Meta:
         verbose_name = _("General post")
         verbose_name_plural = _("General posts")
@@ -120,3 +122,12 @@ class BlogCategory(Slugged):
     @models.permalink
     def get_absolute_url(self):
         return ("blog_post_list_category", (), {"category": self.slug})
+
+
+class Region(models.Model):
+    name = models.CharField(max_length=50)
+
+
+class Country(models.Model):
+    name = models.CharField(max_length=80)
+    region = models.ForeignKey(Region)
