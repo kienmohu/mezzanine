@@ -127,7 +127,13 @@ class BlogCategory(Slugged):
 class Region(models.Model):
     name = models.CharField(max_length=50)
 
+    def __unicode__(self):
+        return u'%s' % self.name
+
 
 class Country(models.Model):
     name = models.CharField(max_length=80)
     region = models.ForeignKey(Region)
+
+    def __unicode__(self):
+        return u'%s' % self.name

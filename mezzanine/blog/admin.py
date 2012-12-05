@@ -4,17 +4,18 @@ from copy import deepcopy
 from django.contrib import admin
 from django.utils.translation import ugettext_lazy as _
 
-from mezzanine.blog.models import BlogPost, BlogCategory
+from mezzanine.blog.models import BlogPost, BlogCategory, Region, Country
 from mezzanine.conf import settings
 from mezzanine.core.admin import DisplayableAdmin, OwnableAdmin
 
 
 blogpost_fieldsets = deepcopy(DisplayableAdmin.fieldsets)
 blogpost_fieldsets[0][1]["fields"].insert(1, "categories")
-blogpost_fieldsets[0][1]["fields"].extend(["content", "allow_comments"])
+blogpost_fieldsets[0][1]["fields"].extend(
+    ["content", "allow_comments", "country"])
 blogpost_list_display = ["title", "user", "status", "admin_link"]
 if settings.BLOG_USE_FEATURED_IMAGE:
-    blogpost_fieldsets[0][1]["fields"].insert(-2, "featured_image")
+    blogpost_fieldsets[0][1]["fields"].insert(-3, "featured_image")
     blogpost_list_display.insert(0, "admin_thumb")
 blogpost_fieldsets = list(blogpost_fieldsets)
 blogpost_fieldsets.insert(1, (_("Other posts"), {
@@ -60,3 +61,5 @@ class BlogCategoryAdmin(admin.ModelAdmin):
 
 #admin.site.register(BlogPost, BlogPostAdmin)
 admin.site.register(BlogCategory, BlogCategoryAdmin)
+admin.site.register(Region)
+admin.site.register(Country)
