@@ -12,7 +12,7 @@ from mezzanine.core.admin import DisplayableAdmin, OwnableAdmin
 blogpost_fieldsets = deepcopy(DisplayableAdmin.fieldsets)
 blogpost_fieldsets[0][1]["fields"].insert(1, "categories")
 blogpost_fieldsets[0][1]["fields"].extend(
-    ["content", "allow_comments", "country"])
+    ["content", "allow_comments", ("country", "is_global")])
 blogpost_list_display = ["title", "user", "status", "admin_link"]
 if settings.BLOG_USE_FEATURED_IMAGE:
     blogpost_fieldsets[0][1]["fields"].insert(-3, "featured_image")

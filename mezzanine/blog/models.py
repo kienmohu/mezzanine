@@ -34,6 +34,8 @@ class BlogPost(Displayable, Ownable, RichText, AdminThumbMixin):
     admin_thumb_field = "featured_image"
 
     country = models.ForeignKey("Country", null=True, blank=True)
+    is_global = models.BooleanField("Is global", help_text=
+        "This will make the post show up in all region or country searches.")
 
     class Meta:
         verbose_name = _("General post")
@@ -127,6 +129,9 @@ class BlogCategory(Slugged):
 class Region(models.Model):
     name = models.CharField(max_length=50)
 
+    class Meta:
+        ordering = ['name']
+
     def __unicode__(self):
         return u'%s' % self.name
 
@@ -134,6 +139,9 @@ class Region(models.Model):
 class Country(models.Model):
     name = models.CharField(max_length=80)
     region = models.ForeignKey(Region)
+
+    class Meta:
+        ordering = ['name']
 
     def __unicode__(self):
         return u'%s' % self.name
