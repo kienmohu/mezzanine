@@ -37,13 +37,49 @@ class BlogPost(Displayable, Ownable, RichText, AdminThumbMixin):
     is_global = models.BooleanField("Is global", help_text=
         "This will make the post show up in all region or country searches.")
 
+    content_model = models.CharField(editable=False, max_length=50, null=True)
+
     class Meta:
         verbose_name = _("General post")
         verbose_name_plural = _("General posts")
         ordering = ("-publish_date",)
         get_latest_by = "publish_date"
 
+    @classmethod
+    def get_content_models(cls):
+        """
+        Return all Page subclasses.
+        """
+        is_content_model = lambda m: m is not BlogPost and issubclass(m, BlogPost)
+        return filter(is_content_model, models.get_models())
+
+    def get_content_model(self):
+        """
+        Provies a generic method of retrieving the instance of the custom
+        content type's model for this page.
+        """
+        content_model_names = self.content_model.split('.')
+        content_model = self
+        for content_model_name in content_model_names:
+            content_model = getattr(content_model, content_model_name, None)
+        return content_model
+
     def save(self, *args, **kwargs):
+
+        if self.id is None or self.content_model is None:
+            object_class = self.__class__
+            content_model_names = []
+            # While the class is not a mezzanine.blog.models.BlogPost class
+            # which is out pseudo BasePost class.  So while the class is not
+            # part of the blog app.
+            while object_class._meta.app_label == 'posts':
+                name  = object_class._meta.object_name.lower()
+                content_model_names.append(name)
+                # Will fail if there are mixins after the Page class
+                object_class = object_class.__bases__[0]
+            content_model_names.reverse()
+            self.content_model = '.'.join(content_model_names)
+
         if not self.featured_image:
             # Try to use image from content field
             pq_content = pq(self.content)
