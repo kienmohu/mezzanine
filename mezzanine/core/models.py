@@ -109,9 +109,10 @@ class MetaData(models.Model):
         max_length=500,
         help_text=_("Optional title to be used in the HTML title tag. "
                     "If left blank, the main title field will be used."))
-    short_title = models.CharField(_("Short Title"), null=True, blank=True,
-        max_length=50,
-        help_text=_("Shorter title that could be used in the footer."))
+    alternative_title = models.CharField(
+        _("Alternative Title"), null=True, blank=True, max_length=50,
+        help_text=_("Alternative title that could be used in the footer or a "\
+                    "promo module"))
     description = models.TextField(_("Description"), blank=True)
     gen_description = models.BooleanField(_("Generate description"),
         help_text=_("If checked, the description will be automatically "
