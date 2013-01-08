@@ -80,7 +80,7 @@ class BlogPost(Displayable, Ownable, RichText, AdminThumbMixin):
             content_model_names.reverse()
             self.content_model = '.'.join(content_model_names)
 
-        if not self.featured_image:
+        if not self.featured_image and self.content:
             # Try to use image from content field
             pq_content = pq(self.content)
             pq_imgs = pq_content.find('img')

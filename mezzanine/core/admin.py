@@ -48,9 +48,10 @@ class DisplayableAdmin(admin.ModelAdmin):
         def clean_content(form):
             status = form.cleaned_data.get("status")
             content = form.cleaned_data.get("content")
-            if status == CONTENT_STATUS_PUBLISHED and not content:
-                raise ValidationError(_("This field is required if status "
-                                        "is set to published."))
+            # Do not disallow empty content
+#            if status == CONTENT_STATUS_PUBLISHED and not content:
+#                raise ValidationError(_("This field is required if status "
+#                                        "is set to published."))
             return content
 
         form.clean_content = clean_content
