@@ -16,6 +16,7 @@ from mezzanine.utils.models import base_concrete_model
 from mezzanine.utils.sites import current_site_id
 from mezzanine.utils.timezone import now
 from mezzanine.utils.urls import admin_url, slugify
+from pyquery import PyQuery as pq
 
 
 class SiteRelated(models.Model):
@@ -156,16 +157,35 @@ class MetaData(models.Model):
         # Fall back to the title if description couldn't be determined.
         if not description:
             description = unicode(self)
-        # Strip everything after the first block or sentence.
-        ends = ("</p>", "<br />", "<br/>", "<br>", "</ul>",
-                "\n", ". ", "! ", "? ")
-        for end in ends:
-            pos = description.lower().find(end)
-            if pos > -1:
-                description = TagCloser(description[:pos]).html
+
+        # Strip everything after the first block or sentence that has content.
+
+        py_description = pq(description)
+        tag_method_success = False
+        for tag_name in ['p', 'ul']:
+            if tag_method_success:
                 break
-        else:
-            description = truncatewords_html(description, 100)
+            py_tags = py_description.find(tag_name)
+            for tag in py_tags:
+                py_tag = pq(tag)
+                if py_tag.text().strip():
+                    description = py_tag.outerHtml()
+                    description = truncatewords_html(description, 100)
+                    tag_method_success = True
+                    break
+
+        if not tag_method_success:
+            # If the previous method failed, try this method
+            ends = ("<br />", "<br/>", "<br>",
+                    "\n", ". ", "! ", "? ")
+            for end in ends:
+                pos = description.lower().find(end)
+                if pos > -1:
+                    description = TagCloser(description[:pos]).html
+                    break
+            else:
+                description = truncatewords_html(description, 100)
+
         return description
 
 
