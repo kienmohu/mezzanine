@@ -10,6 +10,7 @@ from django.utils.translation import ugettext_lazy as _
 from mezzanine.pages.models import Page
 from mezzanine.utils.urls import admin_url
 from mezzanine import template
+from mezzanine.conf import settings
 
 
 register = template.Library()
@@ -192,4 +193,19 @@ def set_page_permissions(context, token):
         perm = request.user.has_perm(perm_name % perm_type)
         perm = perm and getattr(model, "can_%s" % perm_type)(request)
         page.perms[perm_type] = perm
+
+    no_sub_list =  [slug.strip() for slug in settings.PAGES_NO_ADD_SUB_PAGE_SLUGS.split(',')]
+    no_move_list =  [slug.strip() for slug in settings.PAGES_NO_MOVE_PAGE_SLUGS.split(',')]
+    request = context['request']
+
+    print '---%s' % no_sub_list
+    print request.user.is_superuser
+    print page.slug in no_sub_list
+
+    if page.slug in no_sub_list and not request.user.is_superuser:
+        page.perms['cannot_add_subpage'] = True
+        # Also remove delete permission from these pages
+        page.perms['delete'] = False
+    if page.slug in no_move_list and not request.user.is_superuser:
+        page.perms['cannot_move'] = True
     return ""

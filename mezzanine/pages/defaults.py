@@ -62,3 +62,18 @@ register_setting(
     editable=False,
     default=False,
 )
+
+register_setting(
+    name="PAGES_NO_ADD_SUB_PAGE_SLUGS",
+    description="Comma separated list of slugs to not give sub page in admin " \
+                "permission to.",
+    editable=False,
+    default='',
+)
+register_setting(
+    name="PAGES_NO_MOVE_PAGE_SLUGS",
+    description="Comma separated list of slugs to not give ordering ability in admin " \
+                "permission to.",
+    editable=False,
+    default='',
+)
