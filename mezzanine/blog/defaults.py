@@ -19,7 +19,7 @@ register_setting(
     name="BLOG_BITLY_USER",
     label=_("bit.ly username"),
     description=_("Username for http://bit.ly URL shortening service."),
-    editable=True,
+    editable=False,
     default="",
 )
 
@@ -27,7 +27,7 @@ register_setting(
     name="BLOG_BITLY_KEY",
     label=_("bit.ly key"),
     description=_("Key for http://bit.ly URL shortening service."),
-    editable=True,
+    editable=False,
     default="",
 )
 
@@ -51,7 +51,7 @@ register_setting(
     name="BLOG_POST_PER_PAGE",
     label=_("Blog posts per page"),
     description=_("Number of blog posts shown on a blog listing page."),
-    editable=True,
+    editable=False,
     default=5,
 )
 

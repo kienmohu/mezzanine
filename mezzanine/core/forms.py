@@ -110,7 +110,7 @@ def get_edit_form(obj, field_names, data=None, files=None):
     widget_overrides = {
         forms.DateField: fields.DATE,
         forms.DateTimeField: fields.DATE_TIME,
-        forms.EmailField: fields.EMAIL,
+#        forms.EmailField: fields.EMAIL,
     }
 
     class EditForm(forms.ModelForm):

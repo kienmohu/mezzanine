@@ -63,7 +63,7 @@ register_setting(
     label=_("Akismet API Key"),
     description=_("Key for http://akismet.com spam filtering service. Used "
         "for filtering comments and forms."),
-    editable=True,
+    editable=False,
     default="",
 )
 
@@ -302,7 +302,7 @@ register_setting(
     name="SITE_TAGLINE",
     label=_("Tagline"),
     description=_("A tag line that will appear at the top of all pages."),
-    editable=True,
+    editable=False,
     default=_("An open source content management platform."),
 )
 
@@ -323,7 +323,7 @@ register_setting(
     description=_("If ``True``, users will be automatically redirected to "
         "HTTPS for the URLs specified by the ``SSL_FORCE_URL_PREFIXES`` "
         "setting."),
-    editable=True,
+    editable=False,
     default=False,
 )
 
@@ -332,7 +332,7 @@ register_setting(
     label=_("Force Host"),
     description=_("Host name that the site should always be accessed via that "
                 "matches the SSL certificate."),
-    editable=True,
+    editable=False,
     default="",
 )
 
@@ -417,7 +417,7 @@ register_setting(
     name="TAG_CLOUD_SIZES",
     label=_("Tag Cloud Sizes"),
     description=_("Number of different sizes for tags when shown as a cloud."),
-    editable=True,
+    editable=False,
     default=4,
 )
 

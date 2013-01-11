@@ -23,7 +23,7 @@ if generic_comments:
         name="COMMENTS_ACCOUNT_REQUIRED",
         label=_("Accounts required for commenting"),
         description=_("If ``True``, users must log in to comment."),
-        editable=True,
+        editable=False,
         default=False,
     )
 
@@ -57,7 +57,7 @@ if generic_comments:
         label=_("Auto-approve comments"),
         description=_("If ``True``, built-in comments are approved by "
                       "default."),
-        editable=True,
+        editable=False,
         default=True,
     )
 
@@ -75,7 +75,7 @@ if generic_comments:
         description=_("A comma separated list of email addresses that "
                       "will receive an email notification each time a "
                       "new comment is posted on the site."),
-        editable=True,
+        editable=False,
         default="",
     )
 
@@ -94,7 +94,7 @@ if generic_comments:
         description=_("If ``True``, comments that have ``is_public`` "
             "unchecked will still be displayed, but replaced with a "
             "``waiting to be approved`` message."),
-        editable=True,
+        editable=False,
         default=True,
     )
 
@@ -104,7 +104,7 @@ if generic_comments:
         description=_("If ``True``, comments that have ``removed`` "
                       "checked will still be displayed, but replaced "
                       "with a ``removed`` message."),
-        editable=True,
+        editable=False,
         default=True,
     )
 
