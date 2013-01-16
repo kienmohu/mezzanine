@@ -90,6 +90,9 @@ def path_to_slug(path):
     ``Page`` instance's slug.
     """
     from mezzanine.urls import PAGES_SLUG
-    for prefix in (settings.SITE_PREFIX, PAGES_SLUG):
+    prefixes = [settings.SITE_PREFIX, PAGES_SLUG]
+    if settings.OTHER_PAGE_SLUGS and type(settings.OTHER_PAGE_SLUGS) is list:
+        prefixes += settings.OTHER_PAGE_SLUGS
+    for prefix in prefixes:
         path = path.strip("/").replace(prefix, "", 1)
     return path or "/"
