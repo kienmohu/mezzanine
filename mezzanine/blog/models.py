@@ -139,9 +139,9 @@ class BlogCategory(Slugged):
 
     # This is made just for the project section of procor
 
-    SECTION_KNOWLEDGE_TUPLE = ('knowledge', 'Knowledge')
-    SECTION_ACTION_TUPLE = ('action', 'Action')
-    SECTION_GLOBAL_TUPLE = ('global community', 'Global Community')
+    SECTION_KNOWLEDGE_TUPLE = ('procor', 'ProCor')
+    SECTION_ACTION_TUPLE = ('rightcare', 'Right Care Alliance')
+    SECTION_GLOBAL_TUPLE = ('conferences', 'Conferences')
 
     PROCOR_PROJECT_SECTION_TUPLE = [
         SECTION_KNOWLEDGE_TUPLE,
