@@ -230,11 +230,12 @@ class SearchableManager(Manager):
                 all_results.extend(queryset.search(*args, **kwargs))
             else:
                 all_results.extend(queryset)
-        if query:
-            return sorted(all_results, key=lambda r: r.result_count, reverse=True)
-        else:
-            print sorted(all_results, key=lambda r: 'title', reverse=True)
-            return sorted(all_results, key=lambda r: r.title, reverse=True)
+#        if query:
+#            return sorted(all_results, key=lambda r: r.result_count, reverse=True)
+#        else:
+#            print sorted(all_results, key=lambda r: 'title', reverse=True)
+#            return sorted(all_results, key=lambda r: r.title, reverse=True)
+        return all_results
 
 
 class CurrentSiteManager(DjangoCSM):
