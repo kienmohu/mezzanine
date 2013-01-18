@@ -125,7 +125,7 @@ class SearchableQuerySet(QuerySet):
             self._search_terms.update(positive_terms)
 
         #### BUILD QUERYSET FILTER ###
-        print 'search fields are: %s' % search_fields
+
         # Create the queryset combining each set of terms.
         excluded = [reduce(iand, [~Q(**{"%s__icontains" % f: t[1:]}) for f in
             search_fields.keys()]) for t in terms if t[0] == "-"]
