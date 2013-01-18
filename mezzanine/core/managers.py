@@ -125,7 +125,7 @@ class SearchableQuerySet(QuerySet):
             self._search_terms.update(positive_terms)
 
         #### BUILD QUERYSET FILTER ###
-
+        print 'search fields are: %s' % search_fields
         # Create the queryset combining each set of terms.
         excluded = [reduce(iand, [~Q(**{"%s__icontains" % f: t[1:]}) for f in
             search_fields.keys()]) for t in terms if t[0] == "-"]
@@ -216,13 +216,27 @@ class SearchableManager(Manager):
             models = [self.model]
         all_results = []
         user = kwargs.pop("for_user", None)
+
+        query = args[0]
         for model in models:
             try:
-                queryset = model.objects.published(for_user=user)
+                # FIXME: This has been unset from mezzanine default for procor
+                # Not sure if this will break anything.
+                #queryset = model.objects.published(for_user=user)
+                queryset = model.objects.published()
             except AttributeError:
                 queryset = model.objects.get_query_set()
-            all_results.extend(queryset.search(*args, **kwargs))
-        return sorted(all_results, key=lambda r: r.result_count, reverse=True)
+            if query:
+                all_results.extend(queryset.search(*args, **kwargs))
+            else:
+                all_results.extend(queryset)
+        if query:
+            return sorted(all_results, key=lambda r: r.result_count, reverse=True)
+        else:
+            print sorted(all_results, key=lambda r: 'title', reverse=True)
+            return sorted(all_results, key=lambda r: 'title', reverse=True)
+        print 'NO WAYYY'
+
 
 
 class CurrentSiteManager(DjangoCSM):
