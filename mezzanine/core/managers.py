@@ -234,9 +234,7 @@ class SearchableManager(Manager):
             return sorted(all_results, key=lambda r: r.result_count, reverse=True)
         else:
             print sorted(all_results, key=lambda r: 'title', reverse=True)
-            return sorted(all_results, key=lambda r: 'title', reverse=True)
-        print 'NO WAYYY'
-
+            return sorted(all_results, key=lambda r: r.title, reverse=True)
 
 
 class CurrentSiteManager(DjangoCSM):
