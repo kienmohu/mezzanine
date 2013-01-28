@@ -174,7 +174,7 @@ class Region(models.Model):
 
 class Country(models.Model):
     name = models.CharField(max_length=80)
-    region = models.ForeignKey(Region)
+    region = models.ForeignKey(Region, null=True, blank=True)
 
     class Meta:
         ordering = ['name']

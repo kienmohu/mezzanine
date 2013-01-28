@@ -58,8 +58,12 @@ class BlogCategoryAdmin(admin.ModelAdmin):
                 return True
         return False
 
+class CountryAdmin(admin.ModelAdmin):
+    exclude = ['region']
+    list_display = ['id', 'name']
+    list_editable = ['name']
 
 #admin.site.register(BlogPost, BlogPostAdmin)
 admin.site.register(BlogCategory, BlogCategoryAdmin)
-admin.site.register(Region)
-admin.site.register(Country)
+#admin.site.register(Region)
+admin.site.register(Country, CountryAdmin)
