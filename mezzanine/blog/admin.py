@@ -2,6 +2,7 @@
 from copy import deepcopy
 
 from django.contrib import admin
+from django.contrib.admin.filters import AllValuesFieldListFilter
 from django.utils.translation import ugettext_lazy as _
 
 from mezzanine.blog.models import BlogPost, BlogCategory
@@ -48,6 +49,7 @@ class BlogCategoryAdmin(admin.ModelAdmin):
 
     fieldsets = ((None, {"fields": ("title", "project_section")}),)
     list_display = ['title', 'project_section']
+    list_filter = [('project_section', AllValuesFieldListFilter)]
 
     def in_menu(self):
         """
