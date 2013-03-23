@@ -33,10 +33,6 @@ class BlogPost(Displayable, Ownable, RichText, AdminThumbMixin):
 
     admin_thumb_field = "featured_image"
 
-    country = models.ForeignKey("Country", null=True, blank=True)
-    is_global = models.BooleanField("Is global", help_text=
-        "This will make the post show up in all region or country searches.")
-
     content_model = models.CharField(editable=False, max_length=50, null=True)
 
     class Meta:
@@ -160,24 +156,3 @@ class BlogCategory(Slugged):
     @models.permalink
     def get_absolute_url(self):
         return ("blog_post_list_category", (), {"category": self.slug})
-
-
-class Region(models.Model):
-    name = models.CharField(max_length=50)
-
-    class Meta:
-        ordering = ['name']
-
-    def __unicode__(self):
-        return u'%s' % self.name
-
-
-class Country(models.Model):
-    name = models.CharField(max_length=80)
-    region = models.ForeignKey(Region, null=True, blank=True)
-
-    class Meta:
-        ordering = ['name']
-
-    def __unicode__(self):
-        return u'%s' % self.name
